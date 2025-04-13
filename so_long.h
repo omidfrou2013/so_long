@@ -46,6 +46,18 @@ void	clean_exit(char **map, int rows, void *mlx, void *win);
 void	error_exit(char *message);
 void	ft_putendl_fd(char *s, int fd);
 
+//util3
+static void	move_player(char **map, int *player_x, int *player_y, char direction)
+static void	update_map(char **map, int player_x, int player_y)
+void	handle_player_move(char **map, int *player_x, int *player_y, char direction, int *moves)
+void	ft_putnbr_fd(int n, int fd)
+
+//util4
+static int	check_victory(char **map, int player_x, int player_y)
+static int	check_loss(char **map, int player_x, int player_y)
+void	handle_game_status(char **map, int player_x, int player_y, int *moves)
+void	ft_putendl_fd(char *s, int fd)
+
 //utilh
 static void	check_walls(char **map, int rows, int cols);
 

@@ -1,5 +1,5 @@
 NAME 				= so_long
-SRCS 				= main.c util1.c util2.c utilh.c
+SRCS 				= main.c util1.c util2.c utilh.c util3.c util4.c
 CFLAGS	 			= -Wall -Werror -Wextra
 OBJS        		= $(SRCS:.c=.o)
 CC = cc
