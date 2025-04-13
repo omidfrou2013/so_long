@@ -25,26 +25,6 @@ char	**read_map(char *file)
 	return (map);
 }
 
-static void	check_walls(char **map, int rows, int cols)
-{
-	int	i;
-
-	i = 0;
-	while (i < cols)
-	{
-		if (map[0][i] != '1' || map[rows - 1][i] != '1')
-			error_exit("top or bottom wall open");
-		i++;
-	}
-	i = 0;
-	while (i < rows)
-	{
-		if (map[i][0] != '1' || map[i][cols - 1] != '1')
-			error_exit("side walls open");
-		i++;
-	}
-}
-
 static void	check_characters(char **map, int row, int *p, int *e, int *c)
 {
 	int	i;
@@ -84,4 +64,24 @@ void	check_map(char **map)
 	if (p != 1 || e == 0 || c == 0)
 		error_exit("map must have 1 player, at least 1 exit and 1 collectible");
 	check_walls(map, row, col);
+}
+
+static void	flood_fill_util(char **map, int x, int y, int rows, int cols)
+{
+	if (x < 0 || x >= rows || y < 0 || y >= cols)
+		return ;
+	if (map[x][y] == '1' || map[x][y] == 'V')
+		return ;
+	map[x][y] = 'V';  // 'V' marks visited spots
+	flood_fill_util(map, x + 1, y, rows, cols);
+	flood_fill_util(map, x - 1, y, rows, cols);
+	flood_fill_util(map, x, y + 1, rows, cols);
+	flood_fill_util(map, x, y - 1, rows, cols);
+}
+
+void	flood_fill(char **map, int rows, int cols, int start_x, int start_y)
+{
+	if (map[start_x][start_y] == '1')
+		error_exit("starting point is blocked");
+	flood_fill_util(map, start_x, start_y, rows, cols);
 }
