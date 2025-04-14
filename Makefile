@@ -1,26 +1,24 @@
-NAME 				= so_long
-SRCS 				= main.c util1.c util2.c utilh.c util3.c util4.c
-CFLAGS	 			= -Wall -Werror -Wextra
-OBJS        		= $(SRCS:.c=.o)
-CC = cc
+NAME        = so_long
+SRCS        = main.c parsing.c exit.c moves.c win.c render.c
+OBJS        = $(SRCS:.c=.o)
+MLX_DIR     = ./mlx
+MLX_LIB     = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+CFLAGS      = -Wall -Werror -Wextra
+CC          = cc
 
 all: $(NAME)
 
-
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-	@rm -f $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(MLX_LIB) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -o $@ -c $<
-
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJS)
-	
-fclean: clean
-	rm -rf $(NAME)
+	rm -f $(OBJS)
 
+fclean: clean
+	rm -f $(NAME)
 
 re: fclean all
 
