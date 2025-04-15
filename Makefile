@@ -10,12 +10,17 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(MLX_LIB) -o $(NAME)
+	clear
+
+$(MLX);
+	cd ./mlx && make
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -Imlx -c -o $@ $^
 
 clean:
 	rm -f $(OBJS)
+	cd ./mlx && make clean
 
 fclean: clean
 	rm -f $(NAME)

@@ -16,10 +16,16 @@ static void	init_game(t_game *game, char *map_file)
 {
 	game->mlx = mlx_init();
 	if (!game->mlx)
-		exit_with_error("MLX init failed", game);
-	game->map = load_map(map_file);
-	if (!game->map)
-		exit_with_error("Map load failed", game);
+	{
+		write(2, "MLX init failed\n", 17);
+		exit(EXIT_FAILURE);
+	}
+	game->map = read_map(map_file);
+	if (!game->map || !is_valid_map(game->map))
+	{
+		write(2, "Invalid map\n", 13);
+		exit(EXIT_FAILURE);
+	}
 	load_images(game);
 	game->player_x = 1;
 	game->player_y = 1;
